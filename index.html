@@ -135,7 +135,7 @@
       </select>
     </div>
     <div class="form-group">
-      <label for="lvp">LVP / CAT II/III:</label>
+      <label for="lvp">LVP / CAT II/III (A/T ON):</label>
       <input type="checkbox" id="lvp" />
     </div>
     <button type="submit">Calculate</button>
@@ -173,8 +173,25 @@
         if (lvp) maxTail = 10;
       }
 
-      const gustAdj = Math.round((gust - ws) / 2);
-      const vapp = Math.min(vref + gustAdj, vref + 20);
+      // VAPP logic based on LVP = autothrottle ON
+      let windCorrection = 0;
+      if (lvp) {
+        windCorrection = 5; // A/T ON
+      } else {
+        const angleDiff = Math.abs(wd - rw) % 360;
+        const angle = angleDiff > 180 ? 360 - angleDiff : angleDiff;
+        let factor = 0;
+        if (angle <= 20) {
+          factor = 0.5;
+        } else if (angle <= 70) {
+          factor = 0.35;
+        }
+        const estHeadwind = ws * factor;
+        const gustAdd = Math.max(0, gust - ws);
+        windCorrection = estHeadwind + gustAdd;
+        if (windCorrection < 5) windCorrection = 5;
+      }
+      const vapp = Math.min(vref + windCorrection, vref + 15);
 
       let res = `<strong>Crosswind:</strong> ${cross} kt (Limit: ${maxCross}) ` +
         (cross > maxCross ? '<span class="warn">❌ Exceeds Limit</span>' : '<span class="ok">✅ OK</span>') + "<br>";
