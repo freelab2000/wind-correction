@@ -2,13 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Wind Correction App</title>
+
+  <!-- PWA manifest & theme -->
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#004080" />
+
+  <!-- iOS specific -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <link rel="icon" href="icon-192x192.png" />
+  <meta name="apple-mobile-web-app-title" content="WindApp" />
+  <link rel="apple-touch-icon" href="icon-192x192.png" />
+
+  <!-- Service Worker Registration -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -16,36 +23,94 @@
       });
     }
   </script>
+
+  <!-- Styles -->
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
-    h1 { color: #004080; }
-    input, select { margin: 5px; padding: 5px; }
-    .result { background: #e0f7fa; padding: 10px; margin-top: 15px; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f4f4f4;
+      color: #333;
+    }
+    h1 {
+      color: #004080;
+      text-align: center;
+      font-size: 1.6em;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, select, button {
+      font-size: 1em;
+      padding: 6px;
+      margin-top: 4px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      background: #004080;
+      color: white;
+      border: none;
+      margin-top: 15px;
+    }
+    .result {
+      background: #e0f7fa;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 6px;
+    }
+    @media (min-width: 600px) {
+      input, select, button {
+        max-width: 400px;
+      }
+    }
   </style>
 </head>
+
 <body>
   <h1>Wind Correction and Approach Speed</h1>
 
-  <label>Runway Heading: <input type="number" id="runway" value="200" /></label><br/>
-  <label>Wind Direction: <input type="number" id="windDir" value="210" /></label><br/>
-  <label>Wind Speed (kt): <input type="number" id="windSpeed" value="15" /></label><br/>
-  <label>Wind Gust (kt): <input type="number" id="windGust" value="25" /></label><br/>
-  <label>Vref (kt): <input type="number" id="vref" value="135" /></label><br/>
-  <label>RWY Condition Code: 
+  <label>Runway Heading:
+    <input type="number" id="runway" value="200" />
+  </label>
+
+  <label>Wind Direction:
+    <input type="number" id="windDir" value="210" />
+  </label>
+
+  <label>Wind Speed (kt):
+    <input type="number" id="windSpeed" value="15" />
+  </label>
+
+  <label>Wind Gust (kt):
+    <input type="number" id="windGust" value="25" />
+  </label>
+
+  <label>Vref (kt):
+    <input type="number" id="vref" value="135" />
+  </label>
+
+  <label>RWY Condition Code:
     <select id="rwyCode">
       <option value="6">6</option>
       <option value="5" selected>5</option>
       <option value="4">4</option>
       <option value="3">3</option>
     </select>
-  </label><br/>
-  <label>Operation: 
+  </label>
+
+  <label>Operation:
     <select id="operation">
       <option value="takeoff">Takeoff</option>
       <option value="landing" selected>Landing</option>
     </select>
-  </label><br/>
-  <label>LVP / CAT II/III: <input type="checkbox" id="lvp" /></label><br/>
+  </label>
+
+  <label>LVP / CAT II/III:
+    <input type="checkbox" id="lvp" />
+  </label>
 
   <button onclick="calculate()">Calculate</button>
 
