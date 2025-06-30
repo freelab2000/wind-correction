@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
   <title>Wind Correction App</title>
-
-  <!-- PWA -->
+  
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#004080" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -13,16 +12,6 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="apple-touch-icon" href="icon-192x192.png" />
 
-  <!-- Service Worker -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(console.error);
-      });
-    }
-  </script>
-
-  <!-- Estilo visual tipo iOS con etiquetas sobre inputs -->
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -36,16 +25,20 @@
       color: #004080;
       text-align: center;
       font-size: 1.6em;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
 
     .form-group {
       margin-bottom: 18px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     label {
       display: block;
       margin-bottom: 6px;
+      font-size: 0.95em;
       font-weight: 600;
     }
 
@@ -57,12 +50,6 @@
       border-radius: 12px;
       background: white;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      transition: border 0.2s;
-    }
-
-    input:focus, select:focus {
-      border-color: #007aff;
-      outline: none;
     }
 
     button {
@@ -76,11 +63,6 @@
       color: white;
       font-weight: bold;
       box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      transition: background-color 0.2s;
-    }
-
-    button:hover {
-      background-color: #005ecb;
     }
 
     .result {
@@ -89,16 +71,19 @@
       margin-top: 25px;
       border-radius: 12px;
       font-size: 1.05em;
-    }
-
-    @media (min-width: 600px) {
-      input, select, button {
-        max-width: 500px;
-        margin: 0 auto;
-        display: block;
-      }
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
     }
   </style>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(console.error);
+      });
+    }
+  </script>
 </head>
 
 <body>
@@ -106,27 +91,27 @@
 
   <div class="form-group">
     <label for="runway">Runway Heading:</label>
-    <input type="number" id="runway" value="200" />
+    <input type="number" id="runway" value="200" min="0" max="360">
   </div>
 
   <div class="form-group">
     <label for="windDir">Wind Direction:</label>
-    <input type="number" id="windDir" min="0" max="360" value="210" />
+    <input type="number" id="windDir" value="210" min="0" max="360">
   </div>
 
   <div class="form-group">
     <label for="windSpeed">Wind Speed (kt):</label>
-    <input type="number" id="windSpeed" value="15" />
+    <input type="number" id="windSpeed" value="15">
   </div>
 
   <div class="form-group">
     <label for="windGust">Wind Gust (kt):</label>
-    <input type="number" id="windGust" value="25" />
+    <input type="number" id="windGust" value="25">
   </div>
 
   <div class="form-group">
     <label for="vref">Vref (kt):</label>
-    <input type="number" id="vref" value="135" />
+    <input type="number" id="vref" value="135">
   </div>
 
   <div class="form-group">
@@ -149,10 +134,12 @@
 
   <div class="form-group">
     <label for="lvp">LVP / CAT II/III:</label>
-    <input type="checkbox" id="lvp" />
+    <input type="checkbox" id="lvp">
   </div>
 
-  <button onclick="calculate()">Calculate</button>
+  <div class="form-group">
+    <button onclick="calculate()">Calculate</button>
+  </div>
 
   <div class="result" id="output"></div>
 
@@ -170,6 +157,16 @@
       const rwyCode = parseInt(document.getElementById("rwyCode").value);
       const op = document.getElementById("operation").value;
       const lvp = document.getElementById("lvp").checked;
+
+      if (isNaN(runway) || isNaN(windDir) || isNaN(windSpeed) || isNaN(windGust) || isNaN(vref)) {
+        alert("Please enter all values correctly.");
+        return;
+      }
+
+      if (windDir < 0 || windDir > 360) {
+        alert("Wind direction must be between 0 and 360 degrees.");
+        return;
+      }
 
       let angle = toRadians(windDir - runway);
       let crosswind = Math.abs(Math.round(windSpeed * Math.sin(angle)));
