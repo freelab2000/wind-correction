@@ -144,7 +144,7 @@
   <div id="results"></div>
 
   <footer>
-    Versión 1.1.2fwt
+    Versión 1.1.3
   </footer>
 
   <script>
@@ -173,10 +173,10 @@
         if (lvp) maxTail = 10;
       }
 
-      // VAPP logic based on LVP = autothrottle ON
+      // ✅ VAPP logic: no additives for tailwind
       let windCorrection = 0;
-      if (lvp) {
-        windCorrection = 5; // A/T ON
+      if (lvp || headwind < 0) {
+        windCorrection = 5;
       } else {
         const angleDiff = Math.abs(wd - rw) % 360;
         const angle = angleDiff > 180 ? 360 - angleDiff : angleDiff;
@@ -191,6 +191,7 @@
         windCorrection = estHeadwind + gustAdd;
         if (windCorrection < 5) windCorrection = 5;
       }
+
       const vapp = Math.min(vref + windCorrection, vref + 15);
 
       let res = `<strong>Crosswind:</strong> ${cross} kt (Limit: ${maxCross}) ` +
