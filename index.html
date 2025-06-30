@@ -121,10 +121,10 @@
     <div class="form-group">
       <label for="rwyCode">RWY Condition Code:</label>
       <select id="rwyCode">
-        <option value="6">6</option>
-        <option value="5" selected>5</option>
-        <option value="4">4</option>
-        <option value="3">3</option>
+        <option value="6">6 - DRY</option>
+        <option value="5" selected>5 - GOOD</option>
+        <option value="4">4 - GOOD to MEDIUM</option>
+        <option value="3">3 - MEDIUM</option>
       </select>
     </div>
     <div class="form-group">
@@ -169,12 +169,12 @@
 
       let maxCross = 25, maxTail = 15;
       if (op === "landing") {
-        if (code <= 3) maxCross = 15;
+        if (code === 3) maxCross = 15;
         if (lvp) maxTail = 10;
       }
 
       const gustAdj = Math.round((gust - ws) / 2);
-      const vapp = vref + gustAdj;
+      const vapp = Math.min(vref + gustAdj, vref + 20);
 
       let res = `<strong>Crosswind:</strong> ${cross} kt (Limit: ${maxCross}) ` +
         (cross > maxCross ? '<span class="warn">❌ Exceeds Limit</span>' : '<span class="ok">✅ OK</span>') + "<br>";
