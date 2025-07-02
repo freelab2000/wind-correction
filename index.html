@@ -23,8 +23,13 @@
     }
 
     h1 {
+      font-family: monospace;
+      font-size: 24px;
+      background-color: #000;
+      color: #00ffcc;
+      padding: 8px 12px;
+      border-radius: 6px;
       text-align: center;
-      color: #003366;
     }
 
     form {
@@ -96,7 +101,8 @@
   </style>
 </head>
 <body>
-  <h1>Vref additives due wind </h1>
+  <h1>Vref additives due wind</h1>
+
   <form id="windForm">
     <div class="form-group">
       <label for="runway">Runway Heading:</label>
@@ -147,7 +153,7 @@
   <div id="results"></div>
 
   <footer>
-    Versión 1.1.4.fwt
+    Versión 1.1.2
   </footer>
 
   <script>
@@ -176,7 +182,6 @@
         if (lvp) maxTail = 10;
       }
 
-      // ✅ VAPP logic: no additives for tailwind
       let windCorrection = 0;
       if (lvp || headwind < 0) {
         windCorrection = 5;
