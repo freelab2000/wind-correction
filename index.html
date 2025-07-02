@@ -5,16 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Wind Correction App</title>
   <link rel="manifest" href="manifest.json"/>
-  <meta name="theme-color" content="#f4f4f8"/>
+  <meta name="theme-color" content="#000000"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
   <link rel="apple-touch-icon" href="icon-192x192.png"/>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f8;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -24,15 +23,12 @@
     h1 {
       font-family: monospace;
       font-size: 24px;
-      background-color: #000;
-      color: #00ffcc;
       padding: 8px 12px;
       border-radius: 6px;
       text-align: center;
     }
 
     form {
-      background: white;
       padding: 20px;
       border-radius: 16px;
       max-width: 420px;
@@ -60,8 +56,6 @@
       font-size: 16px;
       font-family: monospace;
       box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-      background-color: #000;
-      color: #00ffcc;
       appearance: none;
     }
 
@@ -71,13 +65,10 @@
     }
 
     small {
-      color: #666;
       margin-top: 4px;
     }
 
     button {
-      background-color: #000;
-      color: #00ffcc;
       padding: 14px;
       border: none;
       border-radius: 12px;
@@ -86,15 +77,13 @@
       cursor: pointer;
       width: 100%;
       margin-top: 10px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
       font-family: monospace;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
     }
 
     #results {
       margin-top: 30px;
       padding: 20px;
-      background-color: #000;
-      color: #00ffcc;
       border-radius: 12px;
       max-width: 420px;
       width: 90%;
@@ -104,12 +93,10 @@
     }
 
     .ok {
-      color: #00ff66;
       font-weight: bold;
     }
 
     .warn {
-      color: #ff3366;
       font-weight: bold;
     }
 
@@ -117,35 +104,38 @@
       margin-top: 30px;
       text-align: center;
       font-size: 0.9em;
-      color: gray;
     }
 
+    .disclaimer {
+      margin-top: 20px;
+      max-width: 420px;
+      font-size: 0.8em;
+      text-align: center;
+      font-family: monospace;
+    }
+
+    /* Dark mode */
     @media (prefers-color-scheme: dark) {
       body {
         background-color: #000;
+        color: #00ffcc;
+      }
+
+      h1 {
+        background-color: #000;
+        color: #00ffcc;
       }
 
       form {
         background-color: #111;
-        color: #00ffcc;
       }
 
       input[type="number"],
       select,
-      input[type="text"] {
-        background-color: #000;
-        color: #00ffcc;
-        border: 1px solid #00ffcc;
-      }
-
-      input[type="checkbox"] {
-        accent-color: #00ffcc;
-      }
-
+      input[type="text"],
       button {
         background-color: #000;
         color: #00ffcc;
-        border: 1px solid #00ffcc;
       }
 
       #results {
@@ -153,8 +143,74 @@
         color: #00ffcc;
       }
 
+      .ok {
+        color: #00ff66;
+      }
+
+      .warn {
+        color: #ff3366;
+      }
+
+      small {
+        color: #ccc;
+      }
+
       footer {
+        color: #666;
+      }
+
+      .disclaimer {
+        color: #999;
+      }
+    }
+
+    /* Light mode */
+    @media (prefers-color-scheme: light) {
+      body {
+        background-color: #f4f4f8;
+        color: #000;
+      }
+
+      h1 {
+        background-color: #000;
         color: #00ffcc;
+      }
+
+      form {
+        background-color: #fff;
+      }
+
+      input[type="number"],
+      select,
+      input[type="text"],
+      button {
+        background-color: #000;
+        color: #00ffcc;
+      }
+
+      #results {
+        background-color: #000;
+        color: #00ffcc;
+      }
+
+      .ok {
+        color: #00ff66;
+      }
+
+      .warn {
+        color: #ff3366;
+      }
+
+      small {
+        color: #666;
+      }
+
+      footer {
+        color: gray;
+      }
+
+      .disclaimer {
+        color: #333;
       }
     }
   </style>
@@ -209,12 +265,9 @@
 
   <div id="results"></div>
 
-  <footer>
-    Versión 1.2.1FWT<br>
-    <small>
-      Disclaimer: This application is for reference only. Always cross-check with official procedures.
-    </small>
-  </footer>
+  <div class="disclaimer">Disclaimer: This tool is for reference use only. Always follow official aircraft performance documentation and company SOPs.</div>
+
+  <footer>Version 1.2.3fwt</footer>
 
   <script>
     document.getElementById("windForm").addEventListener("submit", function (e) {
