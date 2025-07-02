@@ -2,7 +2,7 @@
   "name": "Wind Correction App",
   "short_name": "WindApp",
   "description": "Calculate wind correction, crosswind components, and Vapp with regulatory limits.",
-  "start_url": "index.html",
+  "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#ffffff",
