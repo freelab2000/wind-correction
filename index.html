@@ -53,50 +53,24 @@
       font-weight: 500;
     }
 
-    .number-group {
-      display: flex;
-      align-items: center;
-    }
-
-    .number-group button {
-      background-color: #222;
-      color: #00ffcc;
-      border: none;
-      padding: 8px 12px;
-      font-size: 18px;
-      font-family: monospace;
-      cursor: pointer;
-      border-radius: 10px;
-      margin: 0 6px;
-    }
-
-    .number-group input {
-      flex: 1;
-      text-align: center;
+    input[type="number"],
+    select,
+    input[type="text"] {
       padding: 12px;
       border-radius: 12px;
       border: none;
       font-size: 16px;
       font-family: monospace;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
       background-color: #000;
       color: #00ffcc;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
     }
 
-    .number-group input:focus {
+    input[type="number"]:focus,
+    select:focus,
+    input[type="text"]:focus {
       outline: 2px solid #00ffcc;
       background-color: #111;
-    }
-
-    select {
-      padding: 12px;
-      border-radius: 12px;
-      border: none;
-      font-size: 16px;
-      font-family: monospace;
-      background-color: #000;
-      color: #00ffcc;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
     }
 
     input[type="checkbox"] {
@@ -109,7 +83,7 @@
       color: #ccc;
     }
 
-    button[type="submit"] {
+    button {
       padding: 14px;
       border: none;
       border-radius: 12px;
@@ -122,10 +96,9 @@
       color: #000;
       box-shadow: 0 3px 6px rgba(0,0,0,0.2);
       transition: background-color 0.3s ease;
-      margin-top: 10px;
     }
 
-    button[type="submit"]:hover {
+    button:hover {
       background-color: #00ddaa;
     }
 
@@ -175,49 +148,24 @@
   <form id="windForm">
     <div class="form-group">
       <label for="runway">Runway Heading:</label>
-      <div class="number-group">
-        <button type="button" onclick="adjust('runway', -1)">−</button>
-        <input type="text" id="runway" value="200" />
-        <button type="button" onclick="adjust('runway', 1)">+</button>
-      </div>
+      <input type="number" id="runway" value="200" />
     </div>
-
     <div class="form-group">
       <label for="windDir">Wind Direction:</label>
-      <div class="number-group">
-        <button type="button" onclick="adjust('windDir', -1)">−</button>
-        <input type="text" id="windDir" value="210" />
-        <button type="button" onclick="adjust('windDir', 1)">+</button>
-      </div>
+      <input type="number" id="windDir" min="0" max="360" value="210" />
     </div>
-
     <div class="form-group">
       <label for="windSpeed">Wind Speed (kt):</label>
-      <div class="number-group">
-        <button type="button" onclick="adjust('windSpeed', -1)">−</button>
-        <input type="text" id="windSpeed" value="15" />
-        <button type="button" onclick="adjust('windSpeed', 1)">+</button>
-      </div>
+      <input type="number" id="windSpeed" value="15" />
     </div>
-
     <div class="form-group">
       <label for="windGust">Wind Gust (kt):</label>
-      <div class="number-group">
-        <button type="button" onclick="adjust('windGust', -1)">−</button>
-        <input type="text" id="windGust" value="25" />
-        <button type="button" onclick="adjust('windGust', 1)">+</button>
-      </div>
+      <input type="number" id="windGust" value="25" />
     </div>
-
     <div class="form-group">
       <label for="vref">Vref (kt):</label>
-      <div class="number-group">
-        <button type="button" onclick="adjust('vref', -1)">−</button>
-        <input type="text" id="vref" value="135" />
-        <button type="button" onclick="adjust('vref', 1)">+</button>
-      </div>
+      <input type="number" id="vref" value="135" />
     </div>
-
     <div class="form-group">
       <label for="rwyCode">RWY Condition Code:</label>
       <select id="rwyCode">
@@ -228,7 +176,6 @@
       </select>
       <small>Note: Minimum RCC B-767 Medium / CRFI 0.30 (Canada)</small>
     </div>
-
     <div class="form-group">
       <label for="operation">Operation:</label>
       <select id="operation">
@@ -236,12 +183,10 @@
         <option value="landing" selected>Landing</option>
       </select>
     </div>
-
     <div class="form-group">
       <label for="lvp">LVP / CAT II/III (A/T ON):</label>
       <input type="checkbox" id="lvp" />
     </div>
-
     <button type="submit">Calculate</button>
   </form>
 
@@ -252,13 +197,6 @@
   <footer>Version 1.2.3fwt</footer>
 
   <script>
-    function adjust(id, step) {
-      const input = document.getElementById(id);
-      let value = parseInt(input.value) || 0;
-      value += step;
-      input.value = value;
-    }
-
     document.getElementById("windForm").addEventListener("submit", function (e) {
       e.preventDefault();
 
