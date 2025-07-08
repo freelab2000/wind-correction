@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Wind Correction App</title>
+  <title>Vref additives due wind</title>
   <link rel="manifest" href="manifest.json"/>
   <meta name="theme-color" content="#000000"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -11,6 +11,8 @@
   <link rel="apple-touch-icon" href="icon-192x192.png"/>
   <style>
     body {
+      background-color: #000;
+      color: #00ffcc;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       margin: 0;
       padding: 0;
@@ -26,6 +28,8 @@
       padding: 8px 12px;
       border-radius: 6px;
       text-align: center;
+      background-color: #000;
+      color: #00ffcc;
     }
 
     form {
@@ -34,6 +38,8 @@
       max-width: 420px;
       width: 90%;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background-color: #111;
+      border: 1px solid #222;
     }
 
     .form-group {
@@ -56,7 +62,15 @@
       font-size: 16px;
       font-family: monospace;
       box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-      appearance: none;
+      background-color: #000;
+      color: #00ffcc;
+    }
+
+    input[type="number"]:focus,
+    select:focus,
+    input[type="text"]:focus {
+      outline: 2px solid #00ffcc;
+      background-color: #111;
     }
 
     input[type="checkbox"] {
@@ -66,6 +80,7 @@
 
     small {
       margin-top: 4px;
+      color: #ccc;
     }
 
     button {
@@ -76,9 +91,15 @@
       font-weight: bold;
       cursor: pointer;
       width: 100%;
-      margin-top: 10px;
       font-family: monospace;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      background-color: #00ffcc;
+      color: #000;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #00ddaa;
     }
 
     #results {
@@ -89,21 +110,26 @@
       width: 90%;
       font-family: monospace;
       font-size: 16px;
+      background-color: #000;
+      color: #00ffcc;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .ok {
       font-weight: bold;
+      color: #00ff66;
     }
 
     .warn {
       font-weight: bold;
+      color: #ff3366;
     }
 
     footer {
       margin-top: 30px;
       text-align: center;
       font-size: 0.9em;
+      color: #666;
     }
 
     .disclaimer {
@@ -112,106 +138,7 @@
       font-size: 0.8em;
       text-align: center;
       font-family: monospace;
-    }
-
-    /* Dark mode */
-    @media (prefers-color-scheme: dark) {
-      body {
-        background-color: #000;
-        color: #00ffcc;
-      }
-
-      h1 {
-        background-color: #000;
-        color: #00ffcc;
-      }
-
-      form {
-        background-color: #111;
-      }
-
-      input[type="number"],
-      select,
-      input[type="text"],
-      button {
-        background-color: #000;
-        color: #00ffcc;
-      }
-
-      #results {
-        background-color: #000;
-        color: #00ffcc;
-      }
-
-      .ok {
-        color: #00ff66;
-      }
-
-      .warn {
-        color: #ff3366;
-      }
-
-      small {
-        color: #ccc;
-      }
-
-      footer {
-        color: #666;
-      }
-
-      .disclaimer {
-        color: #999;
-      }
-    }
-
-    /* Light mode */
-    @media (prefers-color-scheme: light) {
-      body {
-        background-color: #f4f4f8;
-        color: #000;
-      }
-
-      h1 {
-        background-color: #000;
-        color: #00ffcc;
-      }
-
-      form {
-        background-color: #fff;
-      }
-
-      input[type="number"],
-      select,
-      input[type="text"],
-      button {
-        background-color: #000;
-        color: #00ffcc;
-      }
-
-      #results {
-        background-color: #000;
-        color: #00ffcc;
-      }
-
-      .ok {
-        color: #00ff66;
-      }
-
-      .warn {
-        color: #ff3366;
-      }
-
-      small {
-        color: #666;
-      }
-
-      footer {
-        color: gray;
-      }
-
-      .disclaimer {
-        color: #333;
-      }
+      color: #999;
     }
   </style>
 </head>
@@ -267,7 +194,7 @@
 
   <div class="disclaimer">Disclaimer: This tool is for reference use only. Always follow official aircraft performance documentation and company SOPs.</div>
 
-  <footer>Version 1.2.2</footer>
+  <footer>Version 1.2.3fwt</footer>
 
   <script>
     document.getElementById("windForm").addEventListener("submit", function (e) {
