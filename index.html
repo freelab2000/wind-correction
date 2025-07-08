@@ -267,7 +267,7 @@
 
   <div class="disclaimer">Disclaimer: This tool is for reference use only. Always follow official aircraft performance documentation and company SOPs.</div>
 
-  <footer>Version 1.2.3fwt</footer>
+  <footer>Version 1.2.2</footer>
 
   <script>
     document.getElementById("windForm").addEventListener("submit", function (e) {
@@ -312,12 +312,12 @@
 
       const vapp = Math.min(vref + windCorrection, vref + 15);
 
-      let res = <strong>Crosswind:</strong> ${cross} kt (Limit: ${maxCross})  +
+      let res = `<strong>Crosswind:</strong> ${cross} kt (Limit: ${maxCross}) ` +
         (cross > maxCross ? '<span class="warn">❌ Exceeds Limit</span>' : '<span class="ok">✅ OK</span>') + "<br>";
-      res += <strong>Headwind:</strong> ${headwind} kt (Limit: 25) ✅<br>;
-      res += <strong>Tailwind:</strong> ${tailwind} kt (Limit: ${maxTail})  +
+      res += `<strong>Headwind:</strong> ${headwind} kt (Limit: 25) ✅<br>`;
+      res += `<strong>Tailwind:</strong> ${tailwind} kt (Limit: ${maxTail}) ` +
         (tailwind > maxTail ? '<span class="warn">❌ Exceeds Limit</span>' : '<span class="ok">✅</span>') + "<br>";
-      res += <strong>Suggested Vapp:</strong> ${vapp.toFixed(1)} kt;
+      res += `<strong>Suggested Vapp:</strong> ${vapp.toFixed(1)} kt`;
 
       document.getElementById("results").innerHTML = res;
     });
